@@ -20,11 +20,11 @@ public class TurretScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (target != null) 
+		if (Target != null) 
 		{
 			if(Time.time >= nextMoveTime)
 			{
-				CalculateAim(target.position);
+				//CalculateAim(Target.position);
 			}
 
 			if(Time.time >= 0.75f * Time.deltaTime)
