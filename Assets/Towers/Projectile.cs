@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ProjectileScript : MonoBehaviour {
+public class Projectile : MonoBehaviour {
 
 	private double projectileSpeed = 5.0f;
 	private double projectileRange = 1.5f;
@@ -14,7 +14,7 @@ public class ProjectileScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		transform.Translate (Vector3.forward * projectileSpeed);
+		//transform.Translate(Vector3.forward * projectileSpeed);
 		double distance = projectileSpeed * Time.deltaTime;
 
 		if(distance >= projectileRange)

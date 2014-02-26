@@ -6,7 +6,8 @@ public class TurretScript : MonoBehaviour {
 
 	public double reloadtime = 1f;
 
-	private Transform target = null;
+	private Enemy Target;
+	private Projectile Projectile;
 	private Quaternion rotation;
 	private double nextMoveTime;
 	private double nextFireTime;
@@ -41,6 +42,6 @@ public class TurretScript : MonoBehaviour {
 
 	private void fire()
 	{
-		Instantiate (ProjectileScript, transform.position, rotation);
+		Instantiate(Projectile, transform.position, rotation);
 	}
 }
