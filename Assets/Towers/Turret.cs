@@ -1,13 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TurretScript : MonoBehaviour {
+public class Turret : MonoBehaviour {
+
+    private int Level = 1;
+    private float LevelDamageMultiplier = 1.1f;
+    private float LevelHealthMultiplier = 1.1f;
+    private float LevelReloadTimeMultiplier = 0.9f;
+
+    private float TakenDamage = 0;
+    private float BaseHealth = 100;
+    private float MaxHealth { get { return (BaseHealth * (LevelHealthMultiplier ^ Level)); } }
+    private float CurrentHealth { get { if(MaxHealth < TakenDamage){return 0;}else{return (MaxHealth - TakenDamage);} } }
+
+    private float BaseDamage = 5;
+    private float CurrentDamage { get { return (BaseDamage * (LevelDamageMultiplier ^ Level)); } }
 
 
-	public double reloadtime = 1f;
+    private float BaseReloadTime = 2;
+    private float CurrentReloadTime { get { return (BaseReloadTime * (LevelReloadTimeMultiplier ^ Level)); } }
 
 	private Enemy Target;
 	private Projectile Projectile;
+
 	private Quaternion rotation;
 	private double nextMoveTime;
 	private double nextFireTime;
