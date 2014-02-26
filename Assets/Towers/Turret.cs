@@ -10,15 +10,15 @@ public class Turret : MonoBehaviour {
 
     private float TakenDamage = 0;
     private float BaseHealth = 100;
-    private float MaxHealth { get { return (BaseHealth * (LevelHealthMultiplier ^ Level)); } }
+    private float MaxHealth { get { return (BaseHealth * Mathf.Pow(LevelHealthMultiplier,Level)); } }
     private float CurrentHealth { get { if(MaxHealth < TakenDamage){return 0;}else{return (MaxHealth - TakenDamage);} } }
 
     private float BaseDamage = 5;
-    private float CurrentDamage { get { return (BaseDamage * (LevelDamageMultiplier ^ Level)); } }
+    private float CurrentDamage { get { return (BaseDamage * Mathf.Pow(LevelDamageMultiplier,Level)); } }
 
 
     private float BaseReloadTime = 2;
-    private float CurrentReloadTime { get { return (BaseReloadTime * (LevelReloadTimeMultiplier ^ Level)); } }
+    private float CurrentReloadTime { get { return (BaseReloadTime * Mathf.Pow(LevelReloadTimeMultiplier,Level)); } }
 
 	private Enemy Target;
 	private Projectile Projectile;
@@ -44,7 +44,7 @@ public class Turret : MonoBehaviour {
 
 			if(Time.time >= 0.75f * Time.deltaTime)
 			{
-				fire ();
+				Fire ();
 			}
 		}
 	}
@@ -55,8 +55,12 @@ public class Turret : MonoBehaviour {
 		rotation = Quaternion.LookRotation (aimPoint);
 	}
 
-	private void fire()
+	private void Fire()
 	{
 		Instantiate(Projectile, transform.position, rotation);
 	}
+
+    public void TakeDamage(float damage) {
+        this.TakenDamage += damage;
+    }
 }
