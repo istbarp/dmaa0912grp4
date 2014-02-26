@@ -8,7 +8,6 @@ public class Projectile : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame
@@ -22,4 +21,8 @@ public class Projectile : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
+
+    public void AddMesh(Mesh myMesh){
+        this.gameObject.AddComponent<MeshFilter>().mesh = myMesh;
+    }
 }

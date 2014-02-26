@@ -39,7 +39,8 @@ public class Enemy : MonoBehaviour
 	}
 
 	void UpdateLate() {
-		Move ();
+		Move();
+        Fire();
 	}
 
 	void Move() {
@@ -48,6 +49,7 @@ public class Enemy : MonoBehaviour
 
     private void Fire() {
         if (Target != null) {
+            //Either inflict direct damage or Instantiate a projectile
             Target.TakeDamage(this.CurrentDamage);
         } else {
             //find Target

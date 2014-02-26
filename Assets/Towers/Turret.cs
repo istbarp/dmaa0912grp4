@@ -57,7 +57,10 @@ public class Turret : MonoBehaviour {
 
 	private void Fire()
 	{
-		Instantiate(Projectile, transform.position, rotation);
+		Projectile clone = (Projectile)Instantiate(Projectile, transform.position, rotation);
+        // Finish this
+        //clone.AddMesh(mesh?);
+        clone.rigidbody.AddForce(clone.transform.forward * 1f);
 	}
 
     public void TakeDamage(float damage) {
