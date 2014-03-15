@@ -9,31 +9,21 @@ public class Enemy : MonoBehaviour
     public float Offset = 0.001f;
     private int CurrentWaypoint;
 
-    private int Level = 1;
-    private float LevelDamageMultiplier = 1.1f;
-    private float LevelHealthMultiplier = 1.1f;
-    private float LevelReloadTimeMultiplier = 0.9f;
+    public float Armor = 0;
+    public float Speed = 1;
+    public float CurrentHealth = 10;
+    public float BaseHealth = 10;
+    public int Value = 1;
+    public int Damage = 1;
 
-    public float speed = 1;
-    private float TakenDamage = 0;
-    private float BaseHealth = 100;
+    //Rotation Stuff
     private Quaternion torot;
-    private float dprot = 0.05f;
-    private float MaxHealth { get { return (BaseHealth * Mathf.Pow(LevelHealthMultiplier,Level)); } }
-    private float CurrentHealth { get { if(MaxHealth < TakenDamage){return 0;}else{return (MaxHealth - TakenDamage);} } }
-    
-    //private float BaseDamage = 5;
-    //private float CurrentDamage { get { return (BaseDamage * Mathf.Pow(LevelDamageMultiplier,Level)); } }
-    
-    //private float BaseReloadTime = 2;
-    //private float CurrentReloadTime { get { return (BaseReloadTime * Mathf.Pow(LevelReloadTimeMultiplier,Level)); } }
-
-
-	//private Turret Target;
-	//private Object Base;
+    private Quaternion frrot;
+    private float sprot = 0;
 
     void Start()
     {
+        CurrentHealth = BaseHealth;
         CurrentWaypoint = 0;
         if (Offset < 0.00001)
         {
@@ -53,9 +43,13 @@ public class Enemy : MonoBehaviour
     void Update()
 	{
         Move();
+        if (CurrentHealth <= 0)
+        {
+            Destroy(this.gameObject);
+            //TODO: Add money to player
+        }
 	}
 
-    float sprot = 0;
     /// <summary>
     /// Moves the enemy towards a waypoint 
     /// </summary>
@@ -63,12 +57,12 @@ public class Enemy : MonoBehaviour
     {
         if (Quaternion.Angle(this.transform.rotation, torot) > Offset)
         {
-            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, torot, ((Time.deltaTime + sprot) * speed) * dprot);
+            this.transform.rotation = Quaternion.Slerp(frrot, torot, Time.deltaTime + sprot * Speed);
             sprot += Time.deltaTime;
         }
         else
         {
-            this.transform.position = Vector3.MoveTowards(this.transform.position, WayPoints[CurrentWaypoint].position, Time.deltaTime * speed);
+            this.transform.position = Vector3.MoveTowards(this.transform.position, WayPoints[CurrentWaypoint].position, Time.deltaTime * Speed);
             sprot = 0;
         }
         
@@ -82,23 +76,15 @@ public class Enemy : MonoBehaviour
             else
             {
                 CurrentWaypoint++;
+                frrot = this.transform.rotation;
                 torot = Quaternion.LookRotation(WayPoints[CurrentWaypoint].position - transform.position);
             }
         }
 	}
 
-    //private void Fire() {
-    //    if (Target != null) {
-    //        //Either inflict direct damage or Instantiate a projectile
-    //        Target.TakeDamage(this.CurrentDamage);
-    //    } else {
-    //        //find Target
-    //    }
-    //}
-
     public void TakeDamage(float damage)
     {
-        this.TakenDamage += damage;
+        //this.TakenDamage += damage;
     }
 }
 
