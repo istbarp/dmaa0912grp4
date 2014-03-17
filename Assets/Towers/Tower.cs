@@ -30,6 +30,9 @@ public class Tower : MonoBehaviour
 	private double nextMoveTime;
 	private double nextFireTime;
 
+	private Cash myCash;
+	private Cash turretCost;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -87,11 +90,12 @@ public class Tower : MonoBehaviour
         if (GameObject.Find("Grid").GetComponent<Terrain>().terrainData.GetAlphamaps(Mathf.RoundToInt(vec.x), Mathf.RoundToInt(vec.y), 1, 1)[0, 0, 1] == 1)
         {
             this.renderer.material.color = Color.white;
-            if (Input.GetKey(KeyCode.Mouse0) && Cash.turretCost[isplaced] <= Cash.cash)
+			if (Input.GetKey(KeyCode.Mouse0) )
             {
                 isplaced = true;
-				Cash.cash -= Cash.turretCost[isplaced];
             }
+			//&& turretCost[isplaced] <= myCash
+			//myCash -= turretCost[isplaced];
         }
         else
         {
