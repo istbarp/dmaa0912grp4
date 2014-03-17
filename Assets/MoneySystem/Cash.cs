@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class test : MonoBehaviour {
+public class Cash : MonoBehaviour {
+
+	public int cash = 200;
+	public int[] turretCost = new int[200];
+
 
 	// Use this for initialization
 	void Start () {

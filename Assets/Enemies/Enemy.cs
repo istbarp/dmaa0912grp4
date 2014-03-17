@@ -2,9 +2,11 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cash;
 
 public class Enemy : MonoBehaviour
 {
+	public int cashValue = 50;
     public List<Transform> WayPoints = new List<Transform>();
     public float Offset = 0.001f;
     private int CurrentWaypoint;
@@ -46,7 +48,7 @@ public class Enemy : MonoBehaviour
         if (CurrentHealth <= 0)
         {
             Destroy(this.gameObject);
-            //TODO: Add money to player
+			Cash.cash += cashValue;
         }
 	}
 

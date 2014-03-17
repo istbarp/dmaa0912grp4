@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Cash;
 
 public class Tower : MonoBehaviour
 {
@@ -87,9 +88,10 @@ public class Tower : MonoBehaviour
         if (GameObject.Find("Grid").GetComponent<Terrain>().terrainData.GetAlphamaps(Mathf.RoundToInt(vec.x), Mathf.RoundToInt(vec.y), 1, 1)[0, 0, 1] == 1)
         {
             this.renderer.material.color = Color.white;
-            if (Input.GetKey(KeyCode.Mouse0))
+            if (Input.GetKey(KeyCode.Mouse0) && Cash.turretCost[isplaced] <= Cash.cash)
             {
                 isplaced = true;
+				Cash.cash -= Cash.turretCost[isplaced];
             }
         }
         else
