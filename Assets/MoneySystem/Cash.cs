@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Cash : MonoBehaviour {
 
-	public int cash = 200;
-	public int[] turretCost = new int[200];
+	public static int cash = 200;
+	public static int[] turretCost = new int[200];
 
 
 	// Use this for initialization

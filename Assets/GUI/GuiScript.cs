@@ -32,7 +32,7 @@ public class GuiScript : MonoBehaviour {
 		//set string money to correct number
 		//money = class.currentmoney();
 
-		GUI.Label (new Rect (Screen.width - 120, Screen.height - 25, 120, 50), "Here goes money"); //money);
+		GUI.Label (new Rect (Screen.width - 120, Screen.height - 25, 120, 50), "test"); //money);
 	}
 	
 }
