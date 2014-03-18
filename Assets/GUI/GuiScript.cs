@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class GuiScript : MonoBehaviour {
-
+	
 	void OnGUI () {
 
 		Cash cash = new Cash ();
@@ -12,7 +12,7 @@ public class GuiScript : MonoBehaviour {
 
 		if(GUI.Button(new Rect(Screen.width - 90,40,80,20),"Tower 1"));
 		{
-			//load tower 1
+
 		}
 		if(GUI.Button(new Rect(Screen.width - 90,80,80,20),"Tower 2"));
 		{
