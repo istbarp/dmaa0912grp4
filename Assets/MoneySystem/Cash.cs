@@ -19,4 +19,9 @@ public class Cash : MonoBehaviour
 	{
 	
 	}
+
+	public string getCash()
+	{
+		return myCash.ToString();
+	}
 }

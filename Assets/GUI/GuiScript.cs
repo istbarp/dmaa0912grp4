@@ -3,9 +3,10 @@ using System.Collections;
 
 public class GuiScript : MonoBehaviour {
 
-	string money = "";
-
 	void OnGUI () {
+
+		Cash cash = new Cash ();
+
 		//Tower box
 		GUI.Box (new Rect (Screen.width - 100,10,100,300), "Towers");
 
@@ -32,7 +33,8 @@ public class GuiScript : MonoBehaviour {
 		//set string money to correct number
 		//money = class.currentmoney();
 
-		GUI.Label (new Rect (Screen.width - 120, Screen.height - 25, 120, 50), "test"); //money);
+		GUI.Label (new Rect (Screen.width - 120, Screen.height - 25, 120, 50), cash.getCash()); //money);
+
 	}
 	
 }
