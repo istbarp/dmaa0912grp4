@@ -2,7 +2,8 @@ fileFormatVersion: 2
 guid: 2b5e5e35579ace1489f07d101fc7a970
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - TowerObject: {fileID: 100000, guid: 84a66d4fedf7cfd4d8ca4f68f55e4788, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
