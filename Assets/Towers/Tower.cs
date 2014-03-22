@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Tower : MonoBehaviour
 {
@@ -11,19 +11,15 @@ public class Tower : MonoBehaviour
     private float LevelHealthMultiplier = 1.1f;
     private float LevelReloadTimeMultiplier = 0.9f;
 
-    private float TakenDamage = 0;
-    private float BaseHealth = 100;
-    private float MaxHealth { get { return (BaseHealth * Mathf.Pow(LevelHealthMultiplier,Level)); } }
-    private float CurrentHealth { get { if(MaxHealth < TakenDamage){return 0;}else{return (MaxHealth - TakenDamage);} } }
-
     private float BaseDamage = 5;
     private float CurrentDamage { get { return (BaseDamage * Mathf.Pow(LevelDamageMultiplier,Level)); } }
 
-
-    private float BaseReloadTime = 2;
+    private float BaseReloadTime = 1;
+    private float ReloadTimer = 0;
     private float CurrentReloadTime { get { return (BaseReloadTime * Mathf.Pow(LevelReloadTimeMultiplier,Level)); } }
 
-	private Enemy Target;
+	private GameObject Target;
+    private List<GameObject> Reachable = new List<GameObject>();
 	private Projectile Projectile;
 
 	private Quaternion rotation;
@@ -35,12 +31,6 @@ public class Tower : MonoBehaviour
     private float BaseCost = 100;
     private float UpgradeCost { get { return (BaseCost * Mathf.Pow(1.25f, Level)); } }
 
-
-	// Use this for initialization
-	void Start ()
-    {
-
-	}
 	
 	// Update is called once per frame
 	void Update () 
@@ -48,24 +38,30 @@ public class Tower : MonoBehaviour
         if (!isplaced)
         {
             MoveTower();
+            return;
         }
 
-		if (Target != null)
+        if (Reachable.Count != 0)
         {
-            if (Time.time >= nextMoveTime)
-            {
-                CalculateAim(Target.gameObject.transform.position);
-            }
-
-            if (Time.time >= 0.75f * Time.deltaTime)
-            {
-                Fire();
-            }
-        } 
-        else
-        {
-            FindTarget();
+            Fire();
         }
+
+        //if (Target != null)
+        //{
+        //    if (Time.time >= nextMoveTime)
+        //    {
+        //        CalculateAim(Target.gameObject.transform.position);
+        //    }
+
+        //    if (Time.time >= 0.75f * Time.deltaTime)
+        //    {
+        //        Fire();
+        //    }
+        //} 
+        //else
+        //{
+        //    FindTarget();
+        //}
 	}
 
     /// <summary>
@@ -100,10 +96,8 @@ public class Tower : MonoBehaviour
 			if (Input.GetKey(KeyCode.Mouse0) )
             {
                 isplaced = true;
-                StaticValues.PlayerMoney -= BaseCost;
+                StaticValues.Money -= BaseCost;
             }
-			//&& turretCost[isplaced] <= myCash
-			//myCash -= turretCost[isplaced];
         }
         else
         {
@@ -111,54 +105,73 @@ public class Tower : MonoBehaviour
         }
     }
 
-	private void CalculateAim(Vector3 targetPosition)
-	{
-		Vector3 aimPoint = new Vector3 (targetPosition.x, targetPosition.y, targetPosition.z);
-		rotation = Quaternion.LookRotation (aimPoint);
-	}
+    //private void CalculateAim(Vector3 targetPosition)
+    //{
+    //    Vector3 aimPoint = new Vector3 (targetPosition.x, targetPosition.y, targetPosition.z);
+    //    rotation = Quaternion.LookRotation (aimPoint);
+    //}
 
-    private void FindTarget() {
-        if (Target == null)
-        {
-            Enemy[] enemies = gameObject.GetComponents<Enemy>();
-            foreach(Enemy e in enemies) {
-                Vector3 pos = e.gameObject.transform.position;
-                if(isInRange(this.gameObject.transform.position,pos,50)) {
-                    this.Target = e;
-                    break;
-                }
-            }
-        }
-    }
+    //private void FindTarget()
+    //{
+    //    if (Target == null)
+    //    {
+    //        Enemy[] enemies = gameObject.GetComponents<Enemy>();
+    //        foreach(Enemy e in enemies)
+    //        {
+    //            Vector3 pos = e.gameObject.transform.position;
+    //            if(isInRange(this.gameObject.transform.position,pos,50))
+    //            {
+    //                //this.Target = e;
+    //                break;
+    //            }
+    //        }
+    //    }
+    //}
 
-    private bool isInRange(Vector3 source, Vector3 target, float range) {
-        float x = Mathf.Sqrt(Mathf.Pow(source.x - target.x,2));
-        float y = Mathf.Sqrt(Mathf.Pow(source.y - target.y,2));
-        float z = Mathf.Sqrt(Mathf.Pow(source.z - target.z,2));
+    //private bool isInRange(Vector3 source, Vector3 target, float range)
+    //{
+    //    float x = Mathf.Sqrt(Mathf.Pow(source.x - target.x,2));
+    //    float y = Mathf.Sqrt(Mathf.Pow(source.y - target.y,2));
+    //    float z = Mathf.Sqrt(Mathf.Pow(source.z - target.z,2));
 
-        return ( range > ( Mathf.Sqrt( Mathf.Pow(z,2) + Mathf.Pow( (Mathf.Sqrt( Mathf.Pow(x,2) + Mathf.Pow(y,2))), 2) ) ) );
-    }
+    //    return ( range > ( Mathf.Sqrt( Mathf.Pow(z,2) + Mathf.Pow( (Mathf.Sqrt( Mathf.Pow(x,2) + Mathf.Pow(y,2))), 2) ) ) );
+    //}
 
 	private void Fire()
 	{
-		Projectile clone = (Projectile)Instantiate(Projectile, transform.position, rotation);
-        // Finish this
-        //clone.AddMesh(mesh?);
-        clone.rigidbody.AddForce(clone.transform.forward * 1f);
-        if (Target.CurrentHealth <= 0)
+        ReloadTimer += Time.deltaTime;
+        if (BaseReloadTime < ReloadTimer)
         {
-            Target = null;
+            ReloadTimer = 0;
+            Reachable[0].GetComponent<Enemy>().CurrentHealth -= CurrentDamage;
+            if (Reachable[0].GetComponent<Enemy>().CurrentHealth <= 0)
+            {
+                Reachable.RemoveAt(0);
+            }
         }
 	}
 
-    public void Upgrade() {
-        if (StaticValues.PlayerMoney >= this.UpgradeCost)
+    public void Upgrade()
+    {
+        if (StaticValues.Money >= this.UpgradeCost)
         {
-            StaticValues.PlayerMoney -= this.UpgradeCost;
+            StaticValues.Money -= this.UpgradeCost;
             this.Level += 1;
         }
     }
     //public void TakeDamage(float damage) {
     //    this.TakenDamage += damage;
     //}
+
+    void OnTriggerEnter(Collider Other)
+    {
+        Reachable.Add(Other.gameObject);
+        Debug.Log(Reachable.Count);
+    }
+
+    void OnTriggerExit(Collider Other)
+    {
+        Reachable.Remove(Other.gameObject);
+        Debug.Log(Reachable.Count);
+    }
 }
