@@ -3,18 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IHealthBar
 {
-	private int cashValue = 50;
-	private Cash myCash;
     public List<Transform> WayPoints = new List<Transform>();
     public float Offset = 0.001f;
     private int CurrentWaypoint;
 
     public float Armor = 0;
     public float Speed = 1;
-    public float CurrentHealth = 10;
-    public float BaseHealth = 10;
+    public float _CurrentHealth = 10;
+    private float _BaseHealth = 10;
+    public float BaseHealth
+    {
+        get { return _BaseHealth; }
+        set {_BaseHealth = value; }
+    }
+
+    public float CurrentHealth
+    {
+        get { return _CurrentHealth; }
+        set {_CurrentHealth = value; }
+    }
+
     public int Value = 1;
     public int Damage = 1;
 
@@ -22,6 +32,8 @@ public class Enemy : MonoBehaviour
     private Quaternion torot;
     private Quaternion frrot;
     private float sprot = 0;
+
+    GUITexture HealthBar;
 
     void Start()
     {
@@ -48,7 +60,7 @@ public class Enemy : MonoBehaviour
         if (CurrentHealth <= 0)
         {
             Destroy(this.gameObject);
-			Cash.myCash += cashValue;
+            StaticValues.Money += Value;
         }
 	}
 
@@ -84,9 +96,19 @@ public class Enemy : MonoBehaviour
         }
 	}
 
+    void OnGUI()
+    {
+        
+    }
+
     public void TakeDamage(float damage)
     {
         //this.TakenDamage += damage;
+    }
+
+    void OnMouseOver()
+    {
+
     }
 }
 

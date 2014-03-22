@@ -30,8 +30,7 @@ public class Tower : MonoBehaviour
 	private double nextMoveTime;
 	private double nextFireTime;
 
-	private Cash myCash;
-	private Cash turretCost;
+    public int Cost = 100;
 
 	// Use this for initialization
 	void Start ()

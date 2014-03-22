@@ -12,13 +12,11 @@ public static class StaticValues
     public static string MouseAxisX = "None";
     public static string MouseAxisY = "None";
     public static int invertX = 1;
-
-
-
     public static int invertY = 1;
     public static float deadZone = 0.25f;
     public static float AxisxSpeed = 100;
     public static float AxisySpeed = 100;
+    public static float Money = 200;
 
     /// <summary>
     /// makes a list into a single string which is used for gui e.g.
