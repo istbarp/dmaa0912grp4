@@ -30,8 +30,8 @@ public class Tower : MonoBehaviour
 	private double nextMoveTime;
 	private double nextFireTime;
 
-	private Cash myCash;
-	private Cash turretCost;
+    private float BaseCost = 100;
+    private float UpgradeCost { get { return (BaseCost * Mathf.Pow(1.25f, Level)); } }
 
 	// Use this for initialization
 	void Start ()
@@ -93,6 +93,7 @@ public class Tower : MonoBehaviour
 			if (Input.GetKey(KeyCode.Mouse0) )
             {
                 isplaced = true;
+                StaticValues.PlayerMoney -= BaseCost;
             }
 			//&& turretCost[isplaced] <= myCash
 			//myCash -= turretCost[isplaced];
@@ -117,6 +118,13 @@ public class Tower : MonoBehaviour
         clone.rigidbody.AddForce(clone.transform.forward * 1f);
 	}
 
+    public void Upgrade() {
+        if (StaticValues.PlayerMoney >= this.UpgradeCost)
+        {
+            StaticValues.PlayerMoney -= this.UpgradeCost;
+            this.Level += 1;
+        }
+    }
     //public void TakeDamage(float damage) {
     //    this.TakenDamage += damage;
     //}

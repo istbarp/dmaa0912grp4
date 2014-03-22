@@ -5,8 +5,7 @@ using System.Linq;
 
 public class Enemy : MonoBehaviour
 {
-	private int cashValue = 50;
-	private Cash myCash;
+	private float cashValue = 50;
     public List<Transform> WayPoints = new List<Transform>();
     public float Offset = 0.001f;
     private int CurrentWaypoint;
@@ -48,7 +47,7 @@ public class Enemy : MonoBehaviour
         if (CurrentHealth <= 0)
         {
             Destroy(this.gameObject);
-			Cash.myCash += cashValue;
+            StaticValues.PlayerMoney += this.cashValue;
         }
 	}
 

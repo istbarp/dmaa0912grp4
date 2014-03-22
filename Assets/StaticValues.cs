@@ -20,6 +20,8 @@ public static class StaticValues
     public static float AxisxSpeed = 100;
     public static float AxisySpeed = 100;
 
+    public static float PlayerMoney = 500;
+
     /// <summary>
     /// makes a list into a single string which is used for gui e.g.
     /// </summary>
