@@ -30,7 +30,11 @@ public class Tower : MonoBehaviour
 	private double nextMoveTime;
 	private double nextFireTime;
 
-    public int Cost = 100;
+    public float Cost = 100;
+
+    private float BaseCost = 100;
+    private float UpgradeCost { get { return (BaseCost * Mathf.Pow(1.25f, Level)); } }
+
 
 	// Use this for initialization
 	void Start ()
@@ -46,18 +50,22 @@ public class Tower : MonoBehaviour
             MoveTower();
         }
 
-		if (Target != null) 
-		{
-			if(Time.time >= nextMoveTime)
-			{
-				//CalculateAim(Target.position);
-			}
+		if (Target != null)
+        {
+            if (Time.time >= nextMoveTime)
+            {
+                CalculateAim(Target.gameObject.transform.position);
+            }
 
-			if(Time.time >= 0.75f * Time.deltaTime)
-			{
-				Fire ();
-			}
-		}
+            if (Time.time >= 0.75f * Time.deltaTime)
+            {
+                Fire();
+            }
+        } 
+        else
+        {
+            FindTarget();
+        }
 	}
 
     /// <summary>
@@ -92,6 +100,7 @@ public class Tower : MonoBehaviour
 			if (Input.GetKey(KeyCode.Mouse0) )
             {
                 isplaced = true;
+                StaticValues.PlayerMoney -= BaseCost;
             }
 			//&& turretCost[isplaced] <= myCash
 			//myCash -= turretCost[isplaced];
@@ -108,14 +117,47 @@ public class Tower : MonoBehaviour
 		rotation = Quaternion.LookRotation (aimPoint);
 	}
 
+    private void FindTarget() {
+        if (Target == null)
+        {
+            Enemy[] enemies = gameObject.GetComponents<Enemy>();
+            foreach(Enemy e in enemies) {
+                Vector3 pos = e.gameObject.transform.position;
+                if(isInRange(this.gameObject.transform.position,pos,50)) {
+                    this.Target = e;
+                    break;
+                }
+            }
+        }
+    }
+
+    private bool isInRange(Vector3 source, Vector3 target, float range) {
+        float x = Mathf.Sqrt(Mathf.Pow(source.x - target.x,2));
+        float y = Mathf.Sqrt(Mathf.Pow(source.y - target.y,2));
+        float z = Mathf.Sqrt(Mathf.Pow(source.z - target.z,2));
+
+        return ( range > ( Mathf.Sqrt( Mathf.Pow(z,2) + Mathf.Pow( (Mathf.Sqrt( Mathf.Pow(x,2) + Mathf.Pow(y,2))), 2) ) ) );
+    }
+
 	private void Fire()
 	{
 		Projectile clone = (Projectile)Instantiate(Projectile, transform.position, rotation);
         // Finish this
         //clone.AddMesh(mesh?);
         clone.rigidbody.AddForce(clone.transform.forward * 1f);
+        if (Target.CurrentHealth <= 0)
+        {
+            Target = null;
+        }
 	}
 
+    public void Upgrade() {
+        if (StaticValues.PlayerMoney >= this.UpgradeCost)
+        {
+            StaticValues.PlayerMoney -= this.UpgradeCost;
+            this.Level += 1;
+        }
+    }
     //public void TakeDamage(float damage) {
     //    this.TakenDamage += damage;
     //}
