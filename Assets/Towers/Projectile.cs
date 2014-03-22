@@ -6,6 +6,12 @@ public class Projectile : MonoBehaviour {
 	private double projectileSpeed = 5.0f;
 	private double projectileRange = 1.5f;
 
+    private Enemy Target;
+
+    public Projectile(Enemy Target) {
+        this.Target = Target;
+    }
+
 	// Use this for initialization
 	void Start () {
 	}
