@@ -45,6 +45,7 @@ public class Tower : MonoBehaviour
         {
             Fire();
         }
+        ReloadTimer += Time.deltaTime;
 
         //if (Target != null)
         //{
@@ -139,12 +140,18 @@ public class Tower : MonoBehaviour
 
 	private void Fire()
 	{
-        ReloadTimer += Time.deltaTime;
         if (BaseReloadTime < ReloadTimer)
         {
-            ReloadTimer = 0;
-            Reachable[0].GetComponent<Enemy>().CurrentHealth -= CurrentDamage;
-            if (Reachable[0].GetComponent<Enemy>().CurrentHealth <= 0)
+            if (Reachable[0].gameObject != null)
+            {
+                Reachable[0].GetComponent<Enemy>().CurrentHealth -= CurrentDamage;
+                ReloadTimer = 0;
+                if (Reachable[0].GetComponent<Enemy>().CurrentHealth <= 0)
+                {
+                    Reachable.RemoveAt(0);
+                }
+            }
+            else
             {
                 Reachable.RemoveAt(0);
             }
@@ -166,12 +173,10 @@ public class Tower : MonoBehaviour
     void OnTriggerEnter(Collider Other)
     {
         Reachable.Add(Other.gameObject);
-        Debug.Log(Reachable.Count);
     }
 
     void OnTriggerExit(Collider Other)
     {
         Reachable.Remove(Other.gameObject);
-        Debug.Log(Reachable.Count);
     }
 }

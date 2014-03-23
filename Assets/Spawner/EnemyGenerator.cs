@@ -5,7 +5,7 @@ public class EnemyGenerator : MonoBehaviour
 {
     public int Seed = 0;
     public int WaveAmount = 1;
-    public int CurrentWave = 1;
+    public int CurrentWave = 0;
     public int WaveSize = 1;
 
     public GameObject Enemy;
@@ -133,6 +133,7 @@ public class EnemyGenerator : MonoBehaviour
             }
             spawntimer = 0;
             spawnactive = true;
+            CurrentWave++;
         }
     }
 }

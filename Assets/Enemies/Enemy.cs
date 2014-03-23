@@ -11,8 +11,8 @@ public class Enemy : MonoBehaviour, IHealthBar
 
     public float Armor = 0;
     public float Speed = 1;
-    private float _CurrentHealth = 10;
-    private float _BaseHealth = 10;
+    public float _CurrentHealth = 10;
+    public float _BaseHealth = 10;
     public float BaseHealth
     {
         get { return _BaseHealth; }
