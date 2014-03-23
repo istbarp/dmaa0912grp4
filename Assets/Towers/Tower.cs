@@ -45,6 +45,7 @@ public class Tower : MonoBehaviour
         {
             Fire();
         }
+
         ReloadTimer += Time.deltaTime;
 
         //if (Target != null)
