@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour {
 
-	private double projectileSpeed = 5.0f;
-	private double projectileRange = 1.5f;
+	public double projectileSpeed = 5.0f;
+	public double projectileRange = 1.5f;
 
     private Enemy Target;
 
