@@ -1,31 +1,31 @@
 fileFormatVersion: 2
-guid: f94dc6f8f52c1fe499b976e2f51d75cd
+guid: 6abc583cae3f7944087110a0463e232c
 ModelImporter:
-  serializedVersion: 16
+  serializedVersion: 15
   fileIDToRecycleName:
     100000: ArmLeft
     100002: ArmRight
     100004: BarrelAttachment
-    100006: //RootNode
-    100008: Head
+    100006: Head
+    100008: //RootNode
     100010: TurnTable
     400000: ArmLeft
     400002: ArmRight
     400004: BarrelAttachment
-    400006: //RootNode
-    400008: Head
+    400006: Head
+    400008: //RootNode
     400010: TurnTable
     2300000: ArmLeft
     2300002: ArmRight
     2300004: BarrelAttachment
-    2300006: //RootNode
-    2300008: Head
+    2300006: Head
+    2300008: //RootNode
     2300010: TurnTable
     3300000: ArmLeft
     3300002: ArmRight
     3300004: BarrelAttachment
-    3300006: //RootNode
-    3300008: Head
+    3300006: Head
+    3300008: //RootNode
     3300010: TurnTable
     4300000: GatlingPlatform
     4300002: TurnTable
@@ -33,6 +33,7 @@ ModelImporter:
     4300006: Head
     4300008: BarrelAttachment
     4300010: ArmLeft
+    7400000: Take 001
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -85,5 +86,4 @@ ModelImporter:
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
-  additionalBone: 0
   userData: 

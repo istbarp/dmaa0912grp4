@@ -19,7 +19,7 @@ public class Tower : MonoBehaviour
     private float CurrentReloadTime { get { return (BaseReloadTime * Mathf.Pow(LevelReloadTimeMultiplier,Level)); } }
 
 	private GameObject Target;
-    private List<GameObject> Reachable = new List<GameObject>();
+    public List<GameObject> Reachable = new List<GameObject>();
 	private Projectile Projectile;
 
 	private Quaternion rotation;
@@ -27,6 +27,7 @@ public class Tower : MonoBehaviour
 	private double nextFireTime;
 
     public float Cost = 100;
+	public float turnSpeed = 30f;
 
     private float BaseCost = 100;
     private float UpgradeCost { get { return (BaseCost * Mathf.Pow(1.25f, Level)); } }
@@ -107,11 +108,14 @@ public class Tower : MonoBehaviour
         }
     }
 
-    //private void CalculateAim(Vector3 targetPosition)
-    //{
-    //    Vector3 aimPoint = new Vector3 (targetPosition.x, targetPosition.y, targetPosition.z);
-    //    rotation = Quaternion.LookRotation (aimPoint);
-    //}
+//	private void CalculateAim()
+//	{
+//		if (Reachable [0] != null)
+//		{
+//			transform.LookAt (Reachable [0].transform.position);
+//			transform.eulerAngles = new Vector3 (0, transform.eulerAngles.y - 45, 0);
+//		}
+//	}
 
     //private void FindTarget()
     //{
