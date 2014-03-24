@@ -12,7 +12,11 @@ public class GuiScript : MonoBehaviour {
 
 		if(GUI.Button(new Rect(Screen.width - 90,40,80,20),"Tower 1"))
 		{
-			GameObject.Instantiate(TowerObject);
+			if(StaticValues.Money > 100)
+			{
+				GameObject.Instantiate(TowerObject);
+				StaticValues.Money -= 100;
+			}
 		}
 		if(GUI.Button(new Rect(Screen.width - 90,80,80,20),"Tower 2"))
 		{
